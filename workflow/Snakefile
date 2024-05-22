@@ -1,0 +1,29 @@
+SNAKE_DIR = Path(workflow.basedir)
+SCRIPT_DIR = SNAKE_DIR / "scripts"
+ENS_DIR = SNAKE_DIR / "envs"
+
+rule extract_tradis_ont_reads:
+    input:
+        reads = config["reads"],
+        start = config["start"],
+    output:
+        config["output"],
+    params:
+        end = f'--end {config["end"]}' if config["end"] else '',
+        neg = f'--neg {config["neg"]}' if config["neg"] else '',
+        min_id = f'--min_id {config["min_id"]}' if config["min_id"] else '',
+        max_gap = f'--max_gap {config["max_gap"]}' if config["max_gap"] else '',
+        neg_id = f'--neg_id {config["neg_id"]}' if config["neg_id"] else '',
+        neg_gap = f'--neg_gap {config["neg_gap"]}' if config["neg_gap"] else '',
+    threads: config["threads"]
+    conda:
+        ENS_DIR / "minimap.yaml"
+    shell:
+        """
+        python {SCRIPT_DIR}/extract_tradis_ont_reads.py \
+            --reads {input.reads} \
+            --start {input.start} \
+            {params} \
+            --threads {threads} \
+            > {output}
+        """

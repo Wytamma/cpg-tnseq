@@ -1,0 +1,41 @@
+cli:
+  reads:
+    type: Path
+    help: Path to the reads file
+    required: true
+  output:
+    type: Path
+    help: Path to the output file
+    required: true
+  start:
+    type: Path
+    help: Path to the start sequence file
+    required: true
+  end:
+    type: Path
+    help: Path to the end sequence file
+    required: false
+  neg:
+    type: Path
+    help: Path to the negative sequence file
+    required: false
+  min_id:
+    type: Float
+    help: Minimum alignment percent identity for start/end seqs
+    default: 95.0
+  max_gap:
+    type: Int
+    help: Maximum allowed gap in bp for start/end seqs
+    default: 5
+  neg_id:
+    type: Float
+    help: Minimum alignment percent identity for negative seqs
+    default: 95.0
+  neg_gap:
+    type: Int
+    help: Maximum allowed gap in bp for negative seqs
+    default: 5
+  threads:
+    type: Int
+    help: Threads to use for alignment
+    default: 8
